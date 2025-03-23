@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #333;
+    color: white;
+    padding: 15px;
+}
+
+.header-buttons button {
+    margin-left: 10px;
+    padding: 10px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style dla formularza dodawania książki */
+#add-book {
+    background: white;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#add-book input,
+#add-book select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#add-book button {
+    padding: 10px 20px;
+    background: #008000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Style dla formularza w index.html */
+#filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    background: white;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#filters input,
+#filters select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+#searchBtn {
+    grid-column: span 2;
+    padding: 10px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#book-list {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.book {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+#add-book-button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#add-book-button button {
+    padding: 10px 20px;
+    background: #008000;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

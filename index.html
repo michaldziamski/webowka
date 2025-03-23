@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Księgarnia belmondziarnia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>Księgarnia belmondziarnia</h1>
+    <div class="header-buttons">
+        <button id="loginBtn">Zaloguj</button>
+        <button id="cartBtn">Koszyk</button>
+    </div>
+</header>
+
+<section id="filters">
+    <input type="text" id="search" placeholder="Szukaj książki (nazwa)">
+
+    <input type="number" id="priceMin" placeholder="Min (cena)">
+    <input type="number" id="priceMax" placeholder="Max (cena)">
+
+
+
+    <input type="number" id="pagesMin" placeholder="Min (ilość stron)">
+    <input type="number" id="pagesMax" placeholder="Max (ilość stron)">
+
+    <input type="text" id="authorFilter" placeholder="Autor">
+    <input type="text" id="descriptionFilter" placeholder="Słowo w opisie">
+    <select id="coverFilter">
+        <option value="">Wszystkie okładki</option>
+        <option value="twarda">Twarda</option>
+        <option value="miękka">Miękka</option>
+    </select>
+
+    <button id="searchBtn">Filtruj</button>
+</section>
+
+<section id="book-list">
+    <div class="book">
+        <h3>Siódme wtajemniczenie</h3>
+        <p>Autor: Edmund Niziurski</p>
+        <p>Cena: 39.99 zł</p>
+        <p>Okładka: Twarda</p>
+        <p>Stron: 240</p>
+        <p>Opis: Książka młodzieżowa z nutą tajemnicy.</p>
+    </div>
+
+    <div class="book">
+        <h3>O psie, który jeździł koleją</h3>
+        <p>Autor: Roman Pisarski</p>
+        <p>Cena: 19.99 zł</p>
+        <p>Okładka: Miękka</p>
+        <p>Stron: 80</p>
+        <p>Opis: Wzruszająca historia psa podróżnika.</p>
+    </div>
+</section>
+
+<section id="add-book-button">
+    <button>Dodaj nową książkę</button>
+</section>
+</body>
+</html>
