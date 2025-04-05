@@ -1,0 +1,103 @@
+body {
+    background: linear-gradient(to right, #dbeafe, #f0f9ff);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e3a8a;
+}
+
+.input-group input,
+.input-group select {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    background-color: #f0f9ff;
+    color: #0f172a;
+}
+
+#addTaskBtn {
+    background: linear-gradient(to right, #3b82f6, #06b6d4);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+#addTaskBtn:hover {
+    background: linear-gradient(to right, #06b6d4, #3b82f6);
+}
+
+.list-group {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #e0f2fe;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.list-group-item {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    padding: 10px 14px;
+    background-color: #f8fafc;
+    transition: all 0.3s ease;
+    position: relative;
+    color: #0f172a;
+}
+
+.list-group-item:hover {
+    background-color: #e0f2fe;
+    cursor: pointer;
+}
+
+.list-group-item[data-completed="true"] {
+    text-decoration: line-through;
+    color: #64748b;
+}
+
+.badge.bg-secondary {
+    float: right;
+    margin-left: 10px;
+    font-size: 0.8rem;
+    background-color: #94a3b8;
+}
+
+.btn-danger.btn-sm {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+}
+
+.list-header {
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+    background: linear-gradient(to right, #0ea5e9, #3b82f6);
+    color: white;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    user-select: none;
+    transition: background 0.3s;
+}
+
+.list-header:hover {
+    background: linear-gradient(to right, #3b82f6, #0ea5e9);
+}
