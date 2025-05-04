@@ -1,20 +1,45 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import { db, auth } from '../firebase';
+import { collection, query, where, getDocs, addDoc, onSnapshot, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const ItemsContext = createContext();
 
 export function ItemsProvider({ children }) {
-  const [items, setItems] = useState([
-    { id: 1, title: 'Item 1', category: 'Drama', price: 100 },
-    { id: 2, title: 'Item 2', category: 'Comedy', price: 200 },
-    { id: 3, title: 'Item 3', category: 'Drama', price: 150 },
-  ]);
-
+  const [items, setItems] = useState([]);
+  const [user, setUser] = useState(null);
+  const [showOnlyMyItems, setShowOnlyMyItems] = useState(false);
   const [filters, setFilters] = useState({
     searchTerm: '',
     category: '',
     minPrice: '',
     maxPrice: '',
   });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    let q = collection(db, 'books');
+    if (showOnlyMyItems && user) {
+      q = query(q, where('userId', '==', user.uid));
+    }
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const books = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setItems(books);
+    });
+
+    return () => unsubscribe();
+  }, [showOnlyMyItems, user]);
 
   const filteredItems = items.filter(item => {
     const matchesSearch = item.title.toLowerCase().includes(filters.searchTerm.toLowerCase());
@@ -25,8 +50,44 @@ export function ItemsProvider({ children }) {
     return matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice;
   });
 
-  const addItem = (newItem) => {
-    setItems([...items, { ...newItem, id: items.length + 1 }]);
+  const addItem = async (newItem) => {
+    if (!user) return;
+    
+    try {
+      await addDoc(collection(db, 'books'), {
+        ...newItem,
+        userId: user.uid,
+        createdAt: new Date()
+      });
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
+
+  const editItem = async (itemId, updatedItem) => {
+    if (!user) return;
+    
+    try {
+      const itemRef = doc(db, 'books', itemId);
+      await updateDoc(itemRef, updatedItem);
+    } catch (error) {
+      console.error('Error updating document: ', error);
+    }
+  };
+
+  const deleteItem = async (itemId) => {
+    if (!user) return;
+    
+    try {
+      const itemRef = doc(db, 'books', itemId);
+      await deleteDoc(itemRef);
+    } catch (error) {
+      console.error('Error deleting document: ', error);
+    }
+  };
+
+  const toggleShowOnlyMyItems = () => {
+    setShowOnlyMyItems(!showOnlyMyItems);
   };
 
   return (
@@ -35,6 +96,11 @@ export function ItemsProvider({ children }) {
       filters,
       setFilters,
       addItem,
+      editItem,
+      deleteItem,
+      user,
+      showOnlyMyItems,
+      toggleShowOnlyMyItems
     }}>
       {children}
     </ItemsContext.Provider>

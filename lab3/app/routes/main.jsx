@@ -1,14 +1,41 @@
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { useItems } from '../context/ItemsContext';
 import Navigation from '../components/Navigation';
 
 export default function MainPage() {
-  const { items, filters, setFilters } = useItems();
+  const { items, filters, setFilters, editItem, deleteItem, user } = useItems();
+  const [editingItem, setEditingItem] = useState(null);
+  const [editForm, setEditForm] = useState({
+    title: '',
+    category: '',
+    price: ''
+  });
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditClick = (item) => {
+    setEditingItem(item.id);
+    setEditForm({
+      title: item.title,
+      category: item.category,
+      price: item.price
+    });
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    await editItem(editingItem, editForm);
+    setEditingItem(null);
+  };
+
+  const handleDeleteClick = async (itemId) => {
+    if (window.confirm('Czy na pewno chcesz usunąć tę książkę?')) {
+      await deleteItem(itemId);
+    }
   };
 
   return (
@@ -109,22 +136,80 @@ export default function MainPage() {
                 ) : (
                   items.map((item) => (
                     <tr key={item.id} className="text-black hover:bg-gray-50 transition duration-150 ease-in-out">
-                      <td className="px-6 py-4 whitespace-nowrap">{item.title}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.category}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{item.price}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <button
-                          onClick={() => {}}
-                          className="px-3 py-1 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-150 ease-in-out mr-2"
-                        >
-                          Edytuj
-                        </button>
-                        <button
-                          onClick={() => {}}
-                          className="px-3 py-1 rounded-lg bg-red-600 text-white hover:bg-red-700 transition duration-150 ease-in-out"
-                        >
-                          Usuń
-                        </button>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {editingItem === item.id ? (
+                          <input
+                            type="text"
+                            value={editForm.title}
+                            onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black"
+                          />
+                        ) : (
+                          <div className="text-sm text-black">{item.title}</div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {editingItem === item.id ? (
+                          <select
+                            value={editForm.category}
+                            onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
+                            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black"
+                          >
+                            <option value="Drama">Drama</option>
+                            <option value="Comedy">Comedy</option>
+                          </select>
+                        ) : (
+                          <div className="text-sm text-black">{item.category}</div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {editingItem === item.id ? (
+                          <input
+                            type="number"
+                            value={editForm.price}
+                            onChange={(e) => setEditForm({ ...editForm, price: e.target.value })}
+                            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black"
+                          />
+                        ) : (
+                          <div className="text-sm text-black">{item.price} zł</div>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {user && user.uid === item.userId && (
+                          <div className="flex space-x-2">
+                            {editingItem === item.id ? (
+                              <>
+                                <button
+                                  onClick={handleEditSubmit}
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                  Zapisz
+                                </button>
+                                <button
+                                  onClick={() => setEditingItem(null)}
+                                  className="text-gray-600 hover:text-gray-900"
+                                >
+                                  Anuluj
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button
+                                  onClick={() => handleEditClick(item)}
+                                  className="text-indigo-600 hover:text-indigo-900"
+                                >
+                                  Edytuj
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteClick(item.id)}
+                                  className="text-red-600 hover:text-red-900"
+                                >
+                                  Usuń
+                                </button>
+                              </>
+                            )}
+                          </div>
+                        )}
                       </td>
                     </tr>
                   ))
