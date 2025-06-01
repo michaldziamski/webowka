@@ -44,6 +44,7 @@ export default function MainPage() {
       <div className="container mx-auto p-6 max-w-7xl">
         <div className="mb-8 flex justify-between items-center">
           <div>
+            {}
           </div>
           <Link
             to="/new"
@@ -64,8 +65,9 @@ export default function MainPage() {
                 name="searchTerm"
                 value={filters.searchTerm}
                 onChange={handleFilterChange}
-                placeholder="Wpisz frazę..."
+                placeholder="Wyszukaj książkę..."
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black transition duration-150 ease-in-out"
+                data-testid="search-input"
               />
             </div>
             <div>
@@ -75,6 +77,7 @@ export default function MainPage() {
                 value={filters.category}
                 onChange={handleFilterChange}
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black transition duration-150 ease-in-out"
+                data-testid="category-select"
               >
                 <option value="">Wszystkie kategorie</option>
                 <option value="Drama">Drama</option>
@@ -103,6 +106,19 @@ export default function MainPage() {
                 className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-black transition duration-150 ease-in-out"
               />
             </div>
+          </div>
+          <div className="mt-4 flex justify-end">
+            <button
+              onClick={() => setFilters({
+                searchTerm: '',
+                category: '',
+                minPrice: '',
+                maxPrice: ''
+              })}
+              className="px-4 py-2 rounded-lg bg-gray-200 text-black hover:bg-gray-300 transition duration-150 ease-in-out"
+            >
+              Wyczyść filtry
+            </button>
           </div>
         </div>
 
@@ -134,8 +150,8 @@ export default function MainPage() {
                     </td>
                   </tr>
                 ) : (
-                  items.map((item) => (
-                    <tr key={item.id} className="text-black hover:bg-gray-50 transition duration-150 ease-in-out">
+                  items.map(item => (
+                    <tr key={item.id} className="text-black hover:bg-gray-50 transition duration-150 ease-in-out" data-testid="book-card">
                       <td className="px-6 py-4 whitespace-nowrap">
                         {editingItem === item.id ? (
                           <input

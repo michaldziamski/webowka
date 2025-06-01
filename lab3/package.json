@@ -5,7 +5,9 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js"
+    "start": "react-router-serve ./build/server/index.js",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@firebase/analytics": "^0.10.12",
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@react-router/dev": "^7.5.3",
     "@tailwindcss/vite": "^4.1.4",
+    "cypress": "^14.4.0",
     "tailwindcss": "^4.1.4",
     "vite": "^6.3.3"
   }

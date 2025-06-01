@@ -53,12 +53,12 @@ export default function Navigation() {
                 </button>
               </div>
             ) : (
-              <button
+            <button
                 onClick={handleLogin}
-                className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-150 ease-in-out"
-              >
+              className="px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-150 ease-in-out"
+            >
                 Zaloguj się przez Google
-              </button>
+            </button>
             )}
           </div>
         </div>
